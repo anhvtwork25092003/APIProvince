@@ -1,4 +1,4 @@
-package com.example.demo.restcontroller;
+package com.example.demo.restcontroller.admin;
 
 import com.example.demo.dto.request.ProvinceRequest;
 import com.example.demo.dto.response.ProvinceResponse;
