@@ -54,13 +54,24 @@ public class ProvinceApi {
     }
 
     @GetMapping("/get-province/{id}")
-    public ResponseEntity<ProvinceResponse> getProvince(@PathVariable("id") long id) {
+    public ResponseEntity<Map<String, Object>> getProvince(@PathVariable("id") long id) {
+        Map<String, Object> result = new HashMap<>();
         try {
             ProvinceResponse provinceResponse = this.provinceCommonService.getById(id);
             if (provinceResponse == null) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                result.put("success", false);
+                result.put("message", "TKhông tìm thấy tình có id la: "+ id);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
-            return new ResponseEntity<>(provinceResponse, HttpStatus.OK);
+            result.put("success", true);
+            result.put("data", provinceResponse);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+
+        } catch (CustomNotFoundException e) {
+            result.put("success", false);
+            result.put("message", e.getMessage());
+            result.put("data", null);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -110,7 +121,7 @@ public class ProvinceApi {
             result.put("success", false);
             result.put("message", e.getMessage());
             result.put("data", null);
-            return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             result.put("success", false);
             result.put("message", "Lỗi khi cập nhật tỉnh thành");
@@ -127,12 +138,14 @@ public class ProvinceApi {
         try {
             // Thực hiện xử lý khi dữ liệu hợp lệ và tạo tỉnh thành công
             this.provinceCommonService.delete(id);
+            result.put("success", true);
+            result.put("message", "Xóa tỉnh thành công");
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (CustomNotFoundException e) {
             result.put("success", false);
             result.put("message", e.getMessage());
             result.put("data", null);
-            return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             result.put("success", false);
             result.put("message", "Lỗi khi xóa tỉnh thành");

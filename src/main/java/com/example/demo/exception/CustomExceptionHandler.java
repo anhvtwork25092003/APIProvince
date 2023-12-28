@@ -27,8 +27,8 @@ public class CustomExceptionHandler {
     }
 
 
-    @ExceptionHandler(CustomNotFoundException.class)
-    public ResponseEntity<Object> handleCustomNotFoundException(CustomNotFoundException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-    }
+//    @ExceptionHandler(CustomNotFoundException.class)
+//    public ResponseEntity<Object> handleCustomNotFoundException(CustomNotFoundException ex) {
+//        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NO_CONTENT);
+//    }
 }

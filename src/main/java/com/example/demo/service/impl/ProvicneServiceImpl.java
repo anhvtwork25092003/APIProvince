@@ -4,6 +4,7 @@ import com.example.demo.dto.request.ProvinceRequest;
 import com.example.demo.dto.response.ProvinceResponse;
 import com.example.demo.entities.Province;
 import com.example.demo.exception.CustomNotFoundException;
+import com.example.demo.mapper.ConvertDistrict;
 import com.example.demo.repository.ProvinceRepository;
 import com.example.demo.service.CommonService;
 import com.example.demo.service.ProvinceService;
@@ -31,7 +32,7 @@ public class ProvicneServiceImpl implements CommonService<ProvinceResponse, Prov
     public ProvinceResponse getById(Long id) {
         Province province = provinceRepository.findById(id).orElse(null);
         if (province == null) {
-            return null; // hoặc có thể throw một Exception phù hợp với logic của bạn
+            throw new CustomNotFoundException("Không tìm thấy tỉnh với ID: " + id);
         }
         return convertToDTO(province);
     }
