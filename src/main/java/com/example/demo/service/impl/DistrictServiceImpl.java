@@ -14,7 +14,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DistrictServiceImpl implements DistrictService, CommonService<DistrictResponse, DistrictRequest> {
@@ -87,6 +89,22 @@ public class DistrictServiceImpl implements DistrictService, CommonService<Distr
             throw e;
         } catch (Exception e) {
             throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public List<DistrictResponse> getListDistrictByProvinceName(long provinceId) {
+        try {
+            List<District> districtResponseList = this.districtRepository.findAllByProvinceIdProvince(provinceId);
+            if (districtResponseList == null) {
+                throw new CustomNotFoundException("Không tìm thấy các quận huyện của tỉnh có id là: " + provinceId);
+            }
+            List<DistrictResponse> districtResponseListResponse = districtResponseList.stream()
+                    .map(districtConverter::convertToDistrictResponse)
+                    .collect(Collectors.toList());
+            return districtResponseListResponse;
+        } catch (Exception e) {
+            throw e;
         }
     }
 }
