@@ -12,9 +12,11 @@ import com.example.demo.service.DistrictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class DistrictServiceImpl implements DistrictService, CommonService<DistrictResponse, DistrictRequest> {
 
     @Autowired
@@ -37,7 +39,7 @@ public class DistrictServiceImpl implements DistrictService, CommonService<Distr
     public DistrictResponse getById(Long id) {
         District district = districtRepository.findById(id).orElse(null);
         if (district == null) {
-            throw new CustomNotFoundException("Không tìm thấy tỉnh với ID: " + id); // hoặc có thể throw một Exception phù hợp với logic của bạn
+            throw new CustomNotFoundException("Không tìm thấy quận huyện với ID: " + id); // hoặc có thể throw một Exception phù hợp với logic của bạn
         }
         return districtConverter.convertToDistrictResponse(district);
     }
@@ -70,7 +72,6 @@ public class DistrictServiceImpl implements DistrictService, CommonService<Distr
         } catch (Exception e) {
             throw new RuntimeException();
         }
-
     }
 
     @Override
