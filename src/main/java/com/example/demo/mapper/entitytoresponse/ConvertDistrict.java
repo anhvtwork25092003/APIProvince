@@ -1,4 +1,4 @@
-package com.example.demo.mapper;
+package com.example.demo.mapper.entitytoresponse;
 
 import com.example.demo.dto.response.DistrictResponse;
 import com.example.demo.entities.District;

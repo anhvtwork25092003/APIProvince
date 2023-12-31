@@ -1,7 +1,4 @@
 package com.example.demo.dto.request;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -17,9 +14,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DistrictRequest {
-    @NotBlank(message = "Tên Quận huyện không được để trống")
-    @Size(max = 50, message = "Tên quận huyện không được vượt quá 50 kí tự")
-    private String districtName;
-    private long provinceId;
+public class WardRequest {
+    @NotBlank(message = "Tên phường/xã không được để trống")
+    @Size(max = 50, message = "Tên phường/xã không được vượt quá 50 kí tự")
+    private String wardName;
+    private long idDistrict;
 }

@@ -4,7 +4,7 @@ import com.example.demo.dto.request.DistrictRequest;
 import com.example.demo.dto.response.DistrictResponse;
 import com.example.demo.entities.District;
 import com.example.demo.exception.CustomNotFoundException;
-import com.example.demo.mapper.ConvertDistrict;
+import com.example.demo.mapper.entitytoresponse.ConvertDistrict;
 import com.example.demo.repository.DistrictRepository;
 import com.example.demo.repository.ProvinceRepository;
 import com.example.demo.service.CommonService;
