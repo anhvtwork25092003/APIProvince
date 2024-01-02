@@ -9,4 +9,6 @@ import java.util.List;
 public interface ProvinceService {
 
     Page<ProvinceResponse> listProvinceResponses(Pageable pageable);
+
+    List<ProvinceResponse> allOfProvinceResponses();
 }

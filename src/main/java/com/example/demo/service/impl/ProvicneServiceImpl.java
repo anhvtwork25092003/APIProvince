@@ -12,7 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProvicneServiceImpl implements CommonService<ProvinceResponse, ProvinceRequest>, ProvinceService {
@@ -89,6 +91,19 @@ public class ProvicneServiceImpl implements CommonService<ProvinceResponse, Prov
     public Page<ProvinceResponse> listProvinceResponses(Pageable pageable) {
         Page<Province> provinces = provinceRepository.findAll(pageable);
         return provinces.map(this::convertToDTO);
+    }
+
+    @Override
+    public List<ProvinceResponse> allOfProvinceResponses() {
+        try {
+            List<Province> provinceList = this.provinceRepository.findAll();
+            List<ProvinceResponse> provinceResponses = provinceList.stream()
+                    .map(this::convertToDTO)
+                    .collect(Collectors.toList());
+            return provinceResponses;
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
 

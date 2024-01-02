@@ -18,5 +18,7 @@ public class WardRequest {
     @NotBlank(message = "Tên phường/xã không được để trống")
     @Size(max = 50, message = "Tên phường/xã không được vượt quá 50 kí tự")
     private String wardName;
+
+    @NotBlank(message = "không được để trống")
     private long idDistrict;
 }

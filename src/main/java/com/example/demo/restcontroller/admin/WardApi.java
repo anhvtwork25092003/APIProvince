@@ -37,37 +37,24 @@ public class WardApi {
     WardService wardService;
 
     @GetMapping("/get-list-ward")
-    public ResponseEntity<Map<String, Object>> getListWard(@RequestParam(defaultValue = "1") int page) {
-        Map<String, Object> result = new HashMap<>();
+    public ResponseEntity<Page<WardResponse>> getListWard(@RequestParam(defaultValue = "1") int page) {
         try {
             int pageSize = 5; // Đặt kích thước trang mặc định
             Pageable pageable = PageRequest.of(page - 1, pageSize); // Số trang bắt đầu từ 0
-
             Page<WardResponse> wardResponses = this.wardCommonService.getAll(pageable);
-            result.put("success", true);
-            result.put("message", "danh sach tat ca phuong/xa");
-            result.put("data", wardResponses);
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            return new ResponseEntity<>(wardResponses, HttpStatus.OK);
         } catch (Exception e) {
-            result.put("success", false);
-            result.put("message", "Lỗi khi lấy danh sách phuong/xa" + e);
-            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/get-ward/{idward}")
-    public ResponseEntity<Map<String, Object>> getListWard(@PathVariable("idward") long idward) {
-        Map<String, Object> result = new HashMap<>();
+    public ResponseEntity<WardResponse> getListWard(@PathVariable("idward") long idward) {
         try {
             WardResponse wardResponses = this.wardCommonService.getById(idward);
-            result.put("success", true);
-            result.put("message", "Ket qua ");
-            result.put("data", wardResponses);
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            return new ResponseEntity<>(wardResponses, HttpStatus.OK);
         } catch (Exception e) {
-            result.put("success", false);
-            result.put("message", "Lỗi khi tìm phường xã" + e);
-            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -89,24 +76,18 @@ public class WardApi {
         }
     }
 
-    @PutMapping("/create-ward/{idward}")
-    public ResponseEntity<Map<String, Object>> createWard(@RequestBody @Valid WardRequest wardRequest,
-                                                          @PathVariable("idward") long idward) {
-        Map<String, Object> result = new HashMap<>();
+    @PutMapping("/update-ward/{idward}")
+    public ResponseEntity<WardResponse> createWard(@RequestBody @Valid WardRequest wardRequest,
+                                                   @PathVariable("idward") long idward) {
         try {
             // Thực hiện xử lý khi dữ liệu hợp lệ và tạo tỉnh thành công
             WardResponse wardResponses = this.wardCommonService.update(idward, wardRequest);
-            result.put("success", true);
-            result.put("message", "Cập nhật  phường xã thành công");
-            result.put("data", wardResponses);
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            return new ResponseEntity<>(wardResponses, HttpStatus.OK);
         } catch (Exception e) {
-            result.put("success", false);
-            result.put("message", "Lỗi khi Cập nhật phường xã");
-            result.put("data", null);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
+            return new  ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @DeleteMapping("/delete-ward/{id}")
     public ResponseEntity<Map<String, Object>> delete(
             @PathVariable("id") long id

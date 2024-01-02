@@ -21,5 +21,7 @@ public class DistrictRequest {
     @NotBlank(message = "Tên Quận huyện không được để trống")
     @Size(max = 50, message = "Tên quận huyện không được vượt quá 50 kí tự")
     private String districtName;
+
+    @NotBlank(message = "Không để trống thông tin!")
     private long provinceId;
 }
