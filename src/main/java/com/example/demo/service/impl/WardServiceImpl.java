@@ -15,6 +15,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class WardServiceImpl implements CommonService<WardResponse, WardRequest>, WardService {
 
@@ -97,5 +100,18 @@ public class WardServiceImpl implements CommonService<WardResponse, WardRequest>
             throw e;
         }
 
+    }
+
+    @Override
+    public List<WardResponse> getListWardsByDistrictID(long districtID) {
+        try {
+            List<Ward> listWards = this.wardRepository.findAllByDistrictIdDistrict(districtID);
+            List<WardResponse> wardResponseList = listWards.stream()
+                    .map(convertWard::convertToWardResponse)
+                    .collect(Collectors.toList());
+            return wardResponseList;
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }

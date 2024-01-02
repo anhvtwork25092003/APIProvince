@@ -28,7 +28,7 @@ public class Ward {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idward")
     private long idWard;
-    @Column(name = "wardname")
+    @Column(name = "wardtname")
     private String wardName;
     @ManyToOne
     @JoinColumn(name = "iddistrict")
